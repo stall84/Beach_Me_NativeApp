@@ -17,11 +17,15 @@ const App = () => {
     });
   }, []);
 
+  useEffect(() => {
+    getCoords();
+  }, [getCoords]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Hello Beach-Go'ers!</Text>
-      <TouchableOpacity style={styles.button} onPress={getCoords}>
-        <Text>Press To Get Beached</Text>
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText}>Press To Get Beached</Text>
       </TouchableOpacity>
       <View>
         <Text style={styles.stateDisp}>
@@ -41,7 +45,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'pink',
   },
   text: {
-    fontSize: 28,
+    fontSize: 38,
+    fontFamily: 'Modak',
     fontWeight: 'bold',
     textAlign: 'center',
   },
@@ -51,6 +56,9 @@ const styles = StyleSheet.create({
     marginTop: 15,
     padding: 15,
     borderRadius: 10,
+  },
+  buttonText: {
+    fontWeight: 'bold',
   },
   stateDisp: {
     marginTop: 80,

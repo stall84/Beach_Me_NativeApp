@@ -20,6 +20,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		CF3F3789A3AFEB2234E6245D /* libPods-Beach_Me_App-Beach_Me_AppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8525024874B0D8B574C50E66 /* libPods-Beach_Me_App-Beach_Me_AppTests.a */; };
 		FF7D9C70B33A40C3B4F4D0AB /* libPods-Beach_Me_App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 010810572D792D5875D8A50F /* libPods-Beach_Me_App.a */; };
+		F0C62E5B3F8E480989F6C900 /* Modak-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8B98328DF06044FF9C2BE50E /* Modak-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		FBF0A559529064A52F87485F /* libPods-Beach_Me_App-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Beach_Me_App-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B98328DF06044FF9C2BE50E /* Modak-Regular.ttf */ = {isa = PBXFileReference; name = "Modak-Regular.ttf"; path = "../assets/fonts/Modak-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +183,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				41194BF14777198181EBA9A8 /* Pods */,
+				A9137E6A9B974A27B104360A /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -197,6 +200,15 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		A9137E6A9B974A27B104360A /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				8B98328DF06044FF9C2BE50E /* Modak-Regular.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -342,6 +354,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				F0C62E5B3F8E480989F6C900 /* Modak-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
