@@ -24,7 +24,7 @@ const Landing = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Hello Beach-Go'ers!</Text>
+      <Text style={styles.text}>BEACH-ME!</Text>
       <TouchableOpacity
         style={styles.button}
         // utilizing navigation prop that was passed in at top to navigate to display-beaches page
