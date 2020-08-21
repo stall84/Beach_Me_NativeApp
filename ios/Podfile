@@ -8,6 +8,20 @@ target 'Beach_Me_App' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'react-native-geolocation', :path => '../node_modules/@react-native-community/geolocation'
+
+  pod 'RNCMaskedView', :path => '../node_modules/@react-native-community/masked-view'
+
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
+  pod 'react-native-safe-area-context', :path => '../node_modules/react-native-safe-area-context'
+
+  pod 'RNScreens', :path => '../node_modules/react-native-screens'
+
+  pod 'react-native-config', :path => '../node_modules/react-native-config'
+
   target 'Beach_Me_AppTests' do
     inherit! :complete
     # Pods for testing
