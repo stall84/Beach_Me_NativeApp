@@ -63,20 +63,6 @@ const Landing = ({navigation}) => {
       });
   }, [coords.lat, coords.lng]);
 
-  // const queryDB = () => {
-  //   axios
-  //     .post('https://mes-personal-site.herokuapp.com/api/v1/beaches', {
-  //       lat: coords.lat,
-  //       lng: coords.lng,
-  //     })
-  //     .then((response) => {
-  //       console.log('Response from POST call to backend: ', response);
-  //       setDbBeaches({
-  //         searchBeaches: response.data.data,
-  //       });
-  //       console.log('dbBeaches Hook: ', dbBeaches);
-  //     });
-  // };
   // useEffect effectively works as a componentDidMount class method in this case calling our
   // getCoords callback function on app-load/initial render. getCoords is also passed in dependencies array.
   useEffect(() => {
@@ -95,6 +81,7 @@ const Landing = ({navigation}) => {
               Lat: coords.lat,
               Lng: coords.lng,
             },
+            searchBeaches: dbBeaches.searchBeaches,
           })
         }>
         <Text style={styles.buttonText}>Press To Get Beached</Text>
