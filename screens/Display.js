@@ -4,11 +4,15 @@ import axios from 'axios';
 import '../utilities';
 import {timeConverter} from '../utilities';
 import TripDisplay from '../components/TripDisplay';
+import WeatherDisplay from '../components/WeatherDisplay';
 
 const Display = ({route}) => {
   const [closestBeaches, setClosestBeaches] = useState({
     closestBeaches: [],
     isLoading: true,
+  });
+  const [forecasts, setForecasts] = useState({
+    forecastArray: [],
   });
   const {Lat, Lng} = route.params.userCoords;
   const searchBeaches = route.params.searchBeaches;
@@ -35,12 +39,28 @@ const Display = ({route}) => {
           error,
         );
       });
-  }, [Lat, Lng, searchBeaches]);
+  }, []);
+
+  // const callServerWeather = useCallback(async () => {
+  //   await axios
+  //     .post('https://mes-personal-site.herokuapp.com/api/v1/get-weather', {
+  //       fiveBeaches: closestBeaches.closestBeaches,
+  //     })
+  //     .then((response) => {
+  //       console.log('Weather Response: ', response);
+  //       setForecasts({
+  //         forecastArray: response.data,
+  //       });
+  //     });
+  // }, []);
 
   useEffect(() => {
     callServerBeaches();
   }, []);
 
+  // useEffect(() => {
+  //   callServerWeather();
+  // }, []);
   return (
     <View style={styles.container}>
       <Text style={styles.textItem}>
@@ -51,17 +71,7 @@ const Display = ({route}) => {
         beachProps={closestBeaches}
         userCoords={route.params.userCoords}
       />
-      {/* <FlatList
-        style={styles.ListArea}
-        data={closestBeaches.closestBeaches}
-        extraData={closestBeaches.isLoading}
-        keyExtractor={(item) => item.name}
-        renderItem={({item}) => (
-          <Text style={styles.ListItem}>
-            {item.name} : {timeConverter(item.dur)}
-          </Text>
-        )}
-      /> */}
+      <WeatherDisplay forecastProps={forecasts.forecastArray} />
     </View>
   );
 };
