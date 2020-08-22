@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, FlatList} from 'react-native';
 import axios from 'axios';
 import '../utilities';
 import {timeConverter} from '../utilities';
+import TripDisplay from '../components/TripDisplay';
 
 const Display = ({route}) => {
   const [closestBeaches, setClosestBeaches] = useState({
@@ -42,12 +43,15 @@ const Display = ({route}) => {
 
   return (
     <View style={styles.container}>
-      <Text>THIS WILL BE THE DISPLAY PAGE</Text>
-      <Text>
-        Route User-Coords-Param-Props: Lat: {Lat}, Lng: {Lng}
+      <Text style={styles.textItem}>
+        Click for Navigation-Directions via Google maps
       </Text>
 
-      <FlatList
+      <TripDisplay
+        beachProps={closestBeaches}
+        userCoords={route.params.userCoords}
+      />
+      {/* <FlatList
         style={styles.ListArea}
         data={closestBeaches.closestBeaches}
         extraData={closestBeaches.isLoading}
@@ -57,7 +61,7 @@ const Display = ({route}) => {
             {item.name} : {timeConverter(item.dur)}
           </Text>
         )}
-      />
+      /> */}
     </View>
   );
 };
@@ -69,12 +73,11 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: 'orange',
   },
-  ListArea: {
-    height: 400,
-    width: 360,
-    marginTop: 10,
-    padding: 8,
-    backgroundColor: 'white',
+  textItem: {
+    textAlign: 'center',
+    fontSize: 28,
+    fontFamily: 'Modak',
+    fontWeight: 'bold',
   },
   ListItem: {
     color: 'black',
