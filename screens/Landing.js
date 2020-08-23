@@ -1,24 +1,13 @@
 <script src="http://localhost:8097"></script>;
 import React, {useState, useEffect, useCallback} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import axios from 'axios';
-import Geocode from 'react-geocode';
-import Config from 'react-native-config';
-
-const apiKey = Config.GOOGLE_API_KEY;
 
 const Landing = ({navigation}) => {
   // Initializing our state hook setting initial values to empty strings
   const [coords, setCoords] = useState({lat: '', lng: ''});
-  const [geoField, setGeoField] = useState({lat: '', lng: ''});
-  const [value1, setValue1] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const [dbBeaches, setDbBeaches] = useState({searchBeaches: ''});
   // getCoords hook will query the app's built-in geolocator, and then assign those coordinates to current state
   // pass in empty array for hook dependencies so that function only runs once instead of every re-render
@@ -29,26 +18,11 @@ const Landing = ({navigation}) => {
         lat: position.coords.latitude,
         lng: position.coords.longitude,
       });
+      setIsLoading(false);
     });
   }, []);
-  const getGeoCodeData = useCallback(() => {
-    console.log('api-key: ' + apiKey);
-    console.log('input coords: ', coords);
-    Geocode.setApiKey(Config.GOOGLE_API_KEY);
-    Geocode.setLanguage('en');
-    Geocode.fromAddress(value1).then((response) => {
-      const {lat, lng} = response.results[0].geometry.location;
-      setCoords({
-        lat: lat,
-        lng: lng,
-      });
-      setGeoField({
-        lat: lat,
-        lng: lng,
-      });
-    });
-  }, [coords, value1]);
   const callBeachDB = useCallback(() => {
+    console.log('Calling Backend for Beaches..');
     axios
       .post('https://mes-personal-site.herokuapp.com/api/v1/beaches', {
         lat: coords.lat,
@@ -59,7 +33,6 @@ const Landing = ({navigation}) => {
         setDbBeaches({
           searchBeaches: searchBeaches,
         });
-        console.log('Response from POST call to backend: ', response);
       });
   }, [coords.lat, coords.lng]);
 
@@ -68,42 +41,33 @@ const Landing = ({navigation}) => {
   useEffect(() => {
     getCoords();
   }, [getCoords]);
+  useEffect(() => {
+    if (!isLoading) {
+      callBeachDB();
+    }
+  }, [callBeachDB, isLoading]);
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>BEACH-ME!</Text>
-      <TouchableOpacity
-        style={styles.button}
-        // utilizing navigation prop that was passed in at top to navigate to display-beaches page
-        onPress={() =>
-          navigation.push('Display-Beaches', {
-            userCoords: {
-              Lat: coords.lat,
-              Lng: coords.lng,
-            },
-            searchBeaches: dbBeaches.searchBeaches,
-          })
-        }>
-        <Text style={styles.buttonText}>Press To Get Beached</Text>
-      </TouchableOpacity>
-      <View>
-        <Text style={styles.stateDisp}>
-          Lat: {coords.lat}
-          Lng: {coords.lng}
-        </Text>
-        <View style={styles.formContainer}>
-          <TextInput
-            style={styles.input}
-            value={value1}
-            onChangeText={setValue1}
-            onSubmitEditing={getGeoCodeData}
-            placeholder="Enter City or Zip"
-          />
-        </View>
-        <TouchableOpacity style={styles.button} onPress={callBeachDB}>
-          <Text>Call Backend</Text>
+      <Image source={require('./PalmTree.png')} style={styles.palmImage} />
+      <View style={styles.buttonView}>
+        <TouchableOpacity
+          style={styles.button}
+          // utilizing navigation prop that was passed in at top to navigate to display-beaches page
+          onPress={() =>
+            navigation.push('Display-Beaches', {
+              userCoords: {
+                Lat: coords.lat,
+                Lng: coords.lng,
+              },
+              searchBeaches: dbBeaches.searchBeaches,
+            })
+          }>
+          <Text style={styles.buttonText}>Press To Get Beached</Text>
         </TouchableOpacity>
       </View>
+      <Text style={styles.footer}>Copyright 2020 Michael E Stallings</Text>
     </View>
   );
 };
@@ -112,15 +76,24 @@ const styles = StyleSheet.create({
   container: {
     padding: 20,
     flex: 1,
+    alignItems: 'center',
     backgroundColor: 'pink',
   },
+  palmImage: {
+    height: 420,
+    width: 400,
+  },
   text: {
-    fontSize: 38,
+    fontSize: 52,
     fontFamily: 'Modak',
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  buttonView: {
+    marginTop: 60,
+  },
   button: {
+    width: 240,
     alignItems: 'center',
     backgroundColor: '#87CEEB',
     marginTop: 15,
@@ -130,23 +103,8 @@ const styles = StyleSheet.create({
   buttonText: {
     fontWeight: 'bold',
   },
-  stateDisp: {
-    marginTop: 80,
-    padding: 20,
-    fontSize: 28,
-    fontWeight: 'bold',
-  },
-  formContainer: {
-    marginTop: 40,
-    height: 44,
-    backgroundColor: 'white',
-  },
-  input: {
-    textAlign: 'center',
-    borderWidth: 1,
-    height: 44,
-    borderColor: 'grey',
-    padding: 5,
+  footer: {
+    marginTop: 130,
   },
 });
 

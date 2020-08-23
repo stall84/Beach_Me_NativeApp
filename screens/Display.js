@@ -1,5 +1,5 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 import '../utilities';
 import {timeConverter} from '../utilities';
@@ -7,12 +7,16 @@ import TripDisplay from '../components/TripDisplay';
 import WeatherDisplay from '../components/WeatherDisplay';
 
 const Display = ({route}) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [closestBeaches, setClosestBeaches] = useState({
     closestBeaches: [],
-    isLoading: true,
   });
   const [forecasts, setForecasts] = useState({
-    forecastArray: [],
+    forecast1: '',
+    forecast2: '',
+    forecast3: '',
+    forecast4: '',
+    forecast5: '',
   });
   const {Lat, Lng} = route.params.userCoords;
   const searchBeaches = route.params.searchBeaches;
@@ -30,8 +34,8 @@ const Display = ({route}) => {
         console.log('Response after Google Query: ', response);
         setClosestBeaches({
           closestBeaches: response.data.data,
-          isLoading: false,
         });
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(
@@ -39,55 +43,63 @@ const Display = ({route}) => {
           error,
         );
       });
-  }, []);
+  }, [Lat, Lng, searchBeaches]);
 
-  // const callServerWeather = useCallback(async () => {
-  //   await axios
-  //     .post('https://mes-personal-site.herokuapp.com/api/v1/get-weather', {
-  //       fiveBeaches: closestBeaches.closestBeaches,
-  //     })
-  //     .then((response) => {
-  //       console.log('Weather Response: ', response);
-  //       setForecasts({
-  //         forecastArray: response.data,
-  //       });
-  //     });
-  // }, []);
+  const callServerWeather = useCallback(() => {
+    axios
+      .post('https://mes-personal-site.herokuapp.com/api/v1/get-weather', {
+        fiveBeaches: closestBeaches.closestBeaches,
+      })
+      .then((response) => {
+        console.log('Weather Response: ', response);
+        setForecasts({
+          forecast1: response.data.data[0],
+          forecast2: response.data.data[1],
+          forecast3: response.data.data[2],
+          forecast4: response.data.data[3],
+          forecast5: response.data.data[4],
+        });
+      });
+  }, [closestBeaches]);
 
   useEffect(() => {
     callServerBeaches();
-  }, []);
+  }, [callServerBeaches]);
+  useEffect(() => {
+    if (!isLoading) {
+      callServerWeather();
+    }
+  }, [isLoading, callServerWeather]);
 
-  // useEffect(() => {
-  //   callServerWeather();
-  // }, []);
   return (
-    <View style={styles.container}>
-      <Text style={styles.textItem}>
-        Click for Navigation-Directions via Google maps
-      </Text>
+    <React.Fragment>
+      <View style={styles.container}>
+        <Text style={styles.textItem}>
+          Click for Navigation-Directions via Google maps
+        </Text>
 
-      <TripDisplay
-        beachProps={closestBeaches}
-        userCoords={route.params.userCoords}
-      />
-      <WeatherDisplay forecastProps={forecasts.forecastArray} />
-    </View>
+        <TripDisplay
+          beachProps={closestBeaches}
+          userCoords={route.params.userCoords}
+        />
+        <WeatherDisplay forecastProps={forecasts} />
+      </View>
+    </React.Fragment>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 5,
-    padding: 20,
-    backgroundColor: 'orange',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 15,
+    backgroundColor: 'pink',
   },
   textItem: {
     textAlign: 'center',
-    fontSize: 28,
+    fontSize: 20,
     fontFamily: 'Modak',
-    fontWeight: 'bold',
   },
   ListItem: {
     color: 'black',

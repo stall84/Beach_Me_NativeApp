@@ -7,5 +7,5 @@ export const timeConverter = (secs) => {
   var rHours = Math.floor(hours);
   var minutes = (hours - rHours) * 60;
   var rMinutes = Math.round(minutes);
-  return `${rHours} Hours and ${rMinutes} Minutes`;
+  return `${rHours} Hours : ${rMinutes} Minutes`;
 };
