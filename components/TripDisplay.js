@@ -4,14 +4,13 @@ import '../utilities';
 import {timeConverter} from '../utilities';
 
 const TripDisplay = ({beachProps, userCoords}) => {
-  const {closestBeaches, isLoading} = beachProps;
+  const {closestBeaches} = beachProps;
   const {Lat, Lng} = userCoords;
   return (
     <React.Fragment>
       <FlatList
         style={styles.ListArea}
         data={closestBeaches}
-        extraData={closestBeaches.isLoading}
         keyExtractor={(item) => item.name}
         renderItem={({item}) => (
           <Text
@@ -26,7 +25,6 @@ const TripDisplay = ({beachProps, userCoords}) => {
           </Text>
         )}
       />
-      <View></View>
     </React.Fragment>
   );
 };
@@ -34,21 +32,21 @@ const TripDisplay = ({beachProps, userCoords}) => {
 const styles = StyleSheet.create({
   ListArea: {
     height: 300,
-    width: 360,
+    width: 385,
     marginTop: 10,
     padding: 8,
-    backgroundColor: 'white',
+    backgroundColor: '#87CEEB',
   },
   ListItem: {
     fontFamily: 'Modak',
     color: '#db4735',
-    fontSize: 28,
+    fontSize: 21,
     fontWeight: '200',
     textAlign: 'center',
   },
   TimeText: {
     color: 'black',
-    fontSize: 28,
+    fontSize: 21,
     fontWeight: '200',
   },
 });
