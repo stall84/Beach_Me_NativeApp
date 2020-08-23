@@ -1,4 +1,3 @@
-<script src="http://localhost:8097"></script>;
 import React, {useState, useEffect, useCallback} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import Geolocation from '@react-native-community/geolocation';

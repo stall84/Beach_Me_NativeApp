@@ -1,8 +1,7 @@
 import React, {useState, useCallback, useEffect} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
 import axios from 'axios';
 import '../utilities';
-import {timeConverter} from '../utilities';
 import TripDisplay from '../components/TripDisplay';
 import WeatherDisplay from '../components/WeatherDisplay';
 
